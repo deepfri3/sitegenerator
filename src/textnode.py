@@ -11,13 +11,13 @@ class TextType(Enum):
 TextTypeString = {
     TextType.PLAIN_TEXT: 'PLAIN_TEXT',
     TextType.BOLD_TEXT: 'BOLD_TEXT',
-    TextType.ITALIC_TEXT: 'ITLAIC_TEXT',
+    TextType.ITALIC_TEXT: 'ITALIC_TEXT',
     TextType.CODE_TEXT: 'CODE_TEXT',
     TextType.LINKS_ANCHOR_TEXT: 'link', 
     TextType.IMAGE_ALT_TEXT: 'IMAGE_ALT_TEXT'}
 
 class TextNode(object):
-    def __init__(self, text: str, text_type: TextType, url: str | None):
+    def __init__(self, text: str, text_type: TextType, url: str = None):
         self.text = text
         self.text_type = text_type  
         self.url = url
