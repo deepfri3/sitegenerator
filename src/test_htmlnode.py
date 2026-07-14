@@ -12,8 +12,8 @@ class TestHTMLNode(unittest.TestCase):
 
     def test_all_none(self):
         node = HTMLNode()
-        self.assertEqual(node.tag, None)
-        self.assertEqual(node.value, None)
+        self.assertEqual(node.tag, "")
+        self.assertEqual(node.value, "")
         self.assertEqual(node.children, None)
         self.assertEqual(node.props, None)
 
@@ -44,9 +44,9 @@ class TestParentNode(unittest.TestCase):
             "p",
             [
                 LeafNode("b", "Bold text"),
-                LeafNode(None, "Normal text"),
+                LeafNode("", "Normal text"),
                 LeafNode("i", "italic text"),
-                LeafNode(None, "Normal text"),
+                LeafNode("", "Normal text"),
             ],
         )
         self.assertEqual(node.to_html(), "<p><b>Bold text</b>Normal text<i>italic text</i>Normal text</p>")
