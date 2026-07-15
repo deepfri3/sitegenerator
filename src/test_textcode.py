@@ -1,6 +1,6 @@
 import unittest
 from textnode import TextNode, TextType
-from helpers import split_nodes_delimiter
+from helpers import split_nodes_delimiter, extract_markdown_images, extract_markdown_links
 
 class TestTextNode(unittest.TestCase):
     def test_eq(self):
@@ -24,7 +24,7 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(html_node.tag, None)
         self.assertEqual(html_node.value, "This is a text node")
 
-    def test_split_nodes_delimite(self):
+    def test_split_nodes_delimiter(self):
         old_nodes = [
             TextNode("This is text with a `code block` word", TextType.PLAIN_TEXT ),
             TextNode("`code_block` is at the beginning of text", TextType.PLAIN_TEXT ),
@@ -45,6 +45,16 @@ class TestTextNode(unittest.TestCase):
         self.assertEqual(new_nodes[5].text_type, TextType.PLAIN_TEXT)
         self.assertEqual(new_nodes[8].text, "code block")
         self.assertEqual(new_nodes[8].text_type, TextType.CODE_TEXT)
+
+    def test_extract_markdown_images(self):
+        test1 = '![To YouTube](https://www.youtube.com) and ![To Google](https://www.google.com)'
+        test1_compare = [("To YouTube", "https://www.youtube.com"), ("To Google", "https://www.google.com")]
+        self.assertListEqual(extract_markdown_images(test1), test1_compare)
+
+    def test_extract_markdown_links(self):
+        test1 = '[To YouTube](https://www.youtube.com) and [To Google](https://www.google.com)'
+        test1_compare = [("To YouTube", "https://www.youtube.com"), ("To Google", "https://www.google.com")]
+        self.assertListEqual(extract_markdown_links(test1), test1_compare)
 
 if __name__ == "__main__":
     unittest.main()

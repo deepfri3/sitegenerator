@@ -1,4 +1,5 @@
 from textnode import TextNode, TextType
+import re
 
 def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: TextType) -> list[TextNode]:
     if old_nodes is None:
@@ -12,7 +13,6 @@ def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: 
             if num_delimiters % 2 != 0:
                 raise Exception(f"Not enough matching delimiters ({num_delimiters})")
             split_text = node.text.split(delimiter)
-            print(split_text)
             delimiter_found = False
             while len(split_text) > 0:
                 segment = split_text.pop(0)
@@ -26,3 +26,12 @@ def split_nodes_delimiter(old_nodes: list[TextNode], delimiter: str, text_type: 
                     new_nodes.append(TextNode(segment, TextType.PLAIN_TEXT))
                     delimiter_found = True
     return new_nodes
+
+def extract_markdown_images(text : str) -> list[tuple]:
+    alt_text_reggie = r"\!\[(.*?)\]\((.*?)\)"
+    return re.findall(alt_text_reggie, text)
+
+def extract_markdown_links(text : str) -> list[tuple]:
+    link_text_reggie = r"\[(.*?)\]\((.*?)\)"
+    return re.findall(link_text_reggie, text)
+
